@@ -13,9 +13,12 @@ function loadData() {
 
     // load streetview
 
+    var address = $('#street').val() + ',' + $('#city').val();
+    var url = 'https://maps.googleapis.com/maps/api/streetview?size=600x300&location=' + address;
+    var $bg = $('<img>').addClass('bgimg').attr('src', url);
     // YOUR CODE GOES HERE!
-
+    $body.append($bg);
     return false;
-};
+}
 
 $('#form-container').submit(loadData);
