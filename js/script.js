@@ -26,14 +26,18 @@ function loadData() {
       'api-key': 'd42803f1d4a94ffe84ae633e29fbfa98',
       q: location
     });
-    
+
     $.getJSON(url, function(data) {
       var $ul = $('#nytimes-articles');
       data.response.docs.forEach(function(doc) {
-        var $li = $('<li>');
+        var $li = $('<li>').addClass('article');
         var headline = doc.headline.print_headline || doc.headline.main;
-        $('<h4>').text(headline).appendTo($li);
-        $ul.append($li);
+        var paragraph = doc.lead_paragraph;
+        if (headline && paragraph) {
+          $('<a>').text(headline).attr('href', doc.web_url).appendTo($li);
+          $('<p>').text(paragraph).appendTo($li);
+          $ul.append($li);
+        }
       });
     });
     return false;
