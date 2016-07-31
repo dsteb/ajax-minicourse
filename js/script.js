@@ -1,4 +1,3 @@
-
 function loadData() {
 
     var $body = $('body');
@@ -28,6 +27,8 @@ function loadData() {
     });
 
     $.getJSON(url, function(data) {
+      var title = 'New York Times articles for ' + address;
+      $nytHeaderElem.text(title);
       var $ul = $('#nytimes-articles');
       data.response.docs.forEach(function(doc) {
         var $li = $('<li>').addClass('article');
@@ -39,6 +40,10 @@ function loadData() {
           $ul.append($li);
         }
       });
+    }).fail(function(err) {
+      console.error(err);
+      var title = 'New Your Times articles can not be loaded';
+      $nytHeaderElem.text(title);
     });
     return false;
 }
