@@ -1,7 +1,17 @@
 (function() {
 
   'use strict';
-  
+
+  /*
+    Capitalize each word in the string
+  */
+  function capitalize(text) {
+    var lambda = function(x) {
+      return x.slice(0, 1).toUpperCase() + x.slice(1);
+    };
+    return text.split(' ').map(lambda).join(' ');
+  }
+
   function loadData() {
 
       var $body = $('body');
@@ -19,7 +29,8 @@
       var city = $('#city').val();
       var address = street + ', ' + city;
       var location = street + ',' + city;
-      $greeting.text('Do you really want to live at ' + address + '?');
+      var title = 'Do you really want to live at ' + address + '?';
+      $greeting.text(capitalize(title));
       var url = 'https://maps.googleapis.com/maps/api/streetview?size=600x300&location=' + location;
       var $bg = $('<img>').addClass('bgimg').attr('src', url);
       $body.append($bg);
@@ -32,7 +43,7 @@
 
       $.getJSON(url, function(data) {
         var title = 'New York Times articles for ' + address;
-        $nytHeaderElem.text(title);
+        $nytHeaderElem.text(capitalize(title));
         var $ul = $('#nytimes-articles');
         data.response.docs.forEach(function(doc) {
           var $li = $('<li>').addClass('article');
@@ -47,7 +58,7 @@
       }).fail(function(err) {
         console.error(err);
         var title = 'New Your Times articles can not be loaded';
-        $nytHeaderElem.text(title);
+        $nytHeaderElem.text(capitalize(title));
       });
       return false;
   }
