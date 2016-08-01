@@ -60,6 +60,22 @@
         var title = 'New Your Times articles can not be loaded';
         $nytHeaderElem.text(capitalize(title));
       });
+
+      url = 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=' + location;
+      $.ajax(url, {
+        dataType: 'jsonp'
+      }).done(function(data) {
+        var titles = data[1];
+        var urls = data[3];
+        for (var i = 0; i < titles.length; ++i) {
+          var title = titles[i];
+          var url = urls[i];
+          var $li = $('<li>');
+          $('<a>').attr('href', url).text(title).appendTo($li);
+          $wikiElem.append($li);
+        }
+      });
+
       return false;
   }
 
